@@ -1,0 +1,29 @@
+﻿D:\Visual Studio\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(452,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (OpenGLZ.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  glad.c
+  main.cpp
+  stl.cpp
+  texture.cpp
+D:\Documents\SYNTHESE IMAGES 3D\OpenGL\OpenGLZ\main.cpp(246,52): warning C4267: 'argument' : conversion de 'size_t' en 'GLsizei', perte possible de données
+D:\Documents\SYNTHESE IMAGES 3D\OpenGL\OpenGLZ\CImg\include\CImg.h(16235,1): warning C4319: '~' : zéro étendant 'unsigned int' vers 'double' d'une taille supérieure
+D:\Documents\SYNTHESE IMAGES 3D\OpenGL\OpenGLZ\CImg\include\CImg.h(14788): message : pendant la compilation de la fonction membre classe modèle 'unsigned int cimg_library::CImg<float>::_cimg_math_parser::compile(char *,char *,const unsigned int,unsigned int *const )'
+D:\Documents\SYNTHESE IMAGES 3D\OpenGL\OpenGLZ\CImg\include\CImg.h(14666): message : voir la référence à l'instanciation de la fonction modèle 'unsigned int cimg_library::CImg<float>::_cimg_math_parser::compile(char *,char *,const unsigned int,unsigned int *const )' en cours de compilation
+D:\Documents\SYNTHESE IMAGES 3D\OpenGL\OpenGLZ\CImg\include\CImg.h(23042): message : voir la référence à l'instanciation classe modèle 'cimg_library::CImg<float>::_cimg_math_parser' en cours de compilation
+D:\Documents\SYNTHESE IMAGES 3D\OpenGL\OpenGLZ\CImg\include\CImg.h(23031): message : pendant la compilation de la fonction membre classe modèle 'double cimg_library::CImg<float>::_eval(cimg_library::CImg<float> *const ,const char *const ,const double,const double,const double,const double,const cimg_library::CImgList<T> *const ,cimg_library::CImgList<T> *const ) const'
+D:\Documents\SYNTHESE IMAGES 3D\OpenGL\OpenGLZ\CImg\include\CImg.h(23031): message :         with
+D:\Documents\SYNTHESE IMAGES 3D\OpenGL\OpenGLZ\CImg\include\CImg.h(23031): message :         [
+D:\Documents\SYNTHESE IMAGES 3D\OpenGL\OpenGLZ\CImg\include\CImg.h(23031): message :             T=float
+D:\Documents\SYNTHESE IMAGES 3D\OpenGL\OpenGLZ\CImg\include\CImg.h(23031): message :         ]
+D:\Documents\SYNTHESE IMAGES 3D\OpenGL\OpenGLZ\CImg\include\CImg.h(23026): message : voir la référence à l'instanciation de la fonction modèle 'double cimg_library::CImg<float>::_eval(cimg_library::CImg<float> *const ,const char *const ,const double,const double,const double,const double,const cimg_library::CImgList<T> *const ,cimg_library::CImgList<T> *const ) const' en cours de compilation
+D:\Documents\SYNTHESE IMAGES 3D\OpenGL\OpenGLZ\CImg\include\CImg.h(23026): message :         with
+D:\Documents\SYNTHESE IMAGES 3D\OpenGL\OpenGLZ\CImg\include\CImg.h(23026): message :         [
+D:\Documents\SYNTHESE IMAGES 3D\OpenGL\OpenGLZ\CImg\include\CImg.h(23026): message :             T=float
+D:\Documents\SYNTHESE IMAGES 3D\OpenGL\OpenGLZ\CImg\include\CImg.h(23026): message :         ]
+D:\Documents\SYNTHESE IMAGES 3D\OpenGL\OpenGLZ\CImg\include\CImg.h(34727): message : voir la référence à l'instanciation classe modèle 'cimg_library::CImg<float>' en cours de compilation
+D:\Documents\SYNTHESE IMAGES 3D\OpenGL\OpenGLZ\CImg\include\CImg.h(20960): message : voir la référence à l'instanciation classe modèle 'cimg_library::CImg<double>' en cours de compilation
+D:\Documents\SYNTHESE IMAGES 3D\OpenGL\OpenGLZ\CImg\include\CImg.h(52474): message : voir la référence à l'instanciation classe modèle 'cimg_library::CImg<T>' en cours de compilation
+D:\Documents\SYNTHESE IMAGES 3D\OpenGL\OpenGLZ\CImg\include\CImg.h(19231,1): warning C4319: '~' : zéro étendant 'unsigned int' vers 'double' d'une taille supérieure
+D:\Documents\SYNTHESE IMAGES 3D\OpenGL\OpenGLZ\CImg\include\CImg.h(19229): message : pendant la compilation de la fonction membre classe modèle 'double cimg_library::CImg<float>::_cimg_math_parser::mp_bitwise_not(cimg_library::CImg<float>::_cimg_math_parser &)'
+  Génération de code en cours...
+D:\Documents\SYNTHESE IMAGES 3D\OpenGL\OpenGLZ\CImg\include\CImg.h(16234): message : voir la référence à l'instanciation de la fonction modèle 'double cimg_library::CImg<float>::_cimg_math_parser::mp_bitwise_not(cimg_library::CImg<float>::_cimg_math_parser &)' en cours de compilation
+LINK : warning LNK4098: conflit entre la bibliothèque par défaut 'MSVCRT' et les autres bibliothèques ; utilisez /NODEFAULTLIB:library
+  OpenGLZ.vcxproj -> D:\Documents\SYNTHESE IMAGES 3D\OpenGL\x64\Debug\OpenGL.exe
