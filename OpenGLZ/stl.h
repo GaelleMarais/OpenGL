@@ -6,7 +6,7 @@
 
 struct Triangle
 {
-	glm::vec3 p0, p1, p2;
+	glm::vec3 p0, n0, p1, n1, p2, n2;
 };
 
-std::vector<Triangle> ReadStl(const char * filename);
+std::vector<Triangle> ReadStl(const char* filename);

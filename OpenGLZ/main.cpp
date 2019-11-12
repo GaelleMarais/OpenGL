@@ -170,7 +170,7 @@ int main(void)
 	const auto particules = MakeParticules(nParticules);
 
 	//charge triangle
-	const auto triangle = ReadStl("logo.stl");
+	const auto triangle = ReadStl("sleeping_cat.stl");
 
 	// Shader
 	const auto vertex = MakeShader(GL_VERTEX_SHADER, "shader.vert");
@@ -188,19 +188,21 @@ int main(void)
 
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, triangle.size() * sizeof(glm::vec3) * 3, triangle.data(), GL_STATIC_DRAW);
+
+	glBufferData(GL_ARRAY_BUFFER, triangle.size() * sizeof(Triangle), triangle.data(), GL_STATIC_DRAW);
 
 	// Bindings
+
 	//position
 	auto index = glGetAttribLocation(program, "position");
 
-	glVertexAttribPointer(index, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), nullptr);
+	glVertexAttribPointer(index, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3) * 2, nullptr);
 	glEnableVertexAttribArray(index);
 
-	//color
-	index = glGetAttribLocation(program, "color");
+	//normal
+	index = glGetAttribLocation(program, "normal");
 
-	glVertexAttribPointer(index, 3, GL_FLOAT, GL_FALSE, sizeof(Particule), (void*)12);
+	glVertexAttribPointer(index, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3) * 2, (void*) sizeof(glm::vec3));
 	glEnableVertexAttribArray(index);
 
 
@@ -211,25 +213,26 @@ int main(void)
 	int uniformProjection = glGetUniformLocation(program, "projection");
 
 	int count = 0;
+	glEnable(GL_DEPTH_TEST);
 	while (!glfwWindowShouldClose(window))
 	{
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 		count++;
 
+
 		float s = (0.05f * float(count % 100) / 100);
+		float dist = 25;
 
 		glm::mat4 transform = glm::mat4(1);
-		glm::mat4 view = glm::mat4(1);
-		glm::mat4 projection = glm::mat4(1);
 
-		transform = glm::scale(transform, glm::vec3(0.03, 0.03, 0.03));
+		transform = glm::scale(transform, glm::vec3(0.0001, 0.0001, 0.0001));
+		transform = glm::translate(transform, glm::vec3(dist, 0, 0));
+		transform = glm::rotate(transform, glm::radians(1.0f * count), glm::vec3(0,0,1) );
 
-		//transform = glm::translate(transform, glm::vec3(count * 0.1, 0, 0));
 
-		transform = glm::rotate(transform, glm::radians(1.0f * count), glm::vec3(0,1,0) );
-
-		projection = glm::perspective(glm::radians(90.0f), (float)sizeWidth / (float)sizeHeight, 0.0f, 1000.0f);
-
-		view = glm::lookAt(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		glm::mat4 projection = glm::perspective(glm::radians(90.0f), (float)sizeWidth / (float)sizeHeight, 0.1f, 1000.0f);
+		glm::mat4 view = glm::lookAt(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 
 		glUniformMatrix4fv(uniformTransform, 1, false, glm::value_ptr(transform));
 		glUniformMatrix4fv(uniformView, 1, false, glm::value_ptr(view));
@@ -240,8 +243,16 @@ int main(void)
 
 		glViewport(0, 0, width, height);
 
-		glClear(GL_COLOR_BUFFER_BIT);
-		//glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+		glDrawArrays(GL_TRIANGLES, 0, triangle.size() * 3);
+
+		transform = glm::mat4(1);
+		transform = glm::scale(transform, glm::vec3(0.0001, 0.0001, 0.0001));
+		transform = glm::translate(transform, glm::vec3(0, -20000, 1000));
+		transform = glm::rotate(transform, glm::radians(1.0f * count), glm::vec3(0, 0, -1));
+
+		glUniformMatrix4fv(uniformTransform, 1, false, glm::value_ptr(transform));
+		glUniformMatrix4fv(uniformView, 1, false, glm::value_ptr(view));
+		glUniformMatrix4fv(uniformProjection, 1, false, glm::value_ptr(projection));
 
 		glDrawArrays(GL_TRIANGLES, 0, triangle.size() * 3);
 
