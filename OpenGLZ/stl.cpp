@@ -1,5 +1,6 @@
+#pragma once
 #include "stl.h"
-
+#include "objloader.hpp"
 #include <fstream>
 
 std::vector<Triangle> ReadStl(const char* filename, const char* uvfilename)
@@ -39,4 +40,27 @@ std::vector<Triangle> ReadStl(const char* filename, const char* uvfilename)
 	{
 		return {};
 	}
+}
+
+
+std::vector<Triangle> ReadObj(const char* filename)
+{
+	std::vector<glm::vec3> vertices;
+	std::vector<glm::vec2> uv;
+	std::vector<glm::vec3> normals;
+
+
+	loadOBJ(filename, vertices, uv, normals);
+
+	std::vector<Triangle> tris;
+
+	tris.reserve(vertices.size());
+
+	for (int i = 0; i < vertices.size() / 3; i++)
+	{
+		tris.push_back({ vertices[3 * i], normals[i], uv[3 * i], vertices[3 * i + 1], normals[i], uv[3 * i + 1], vertices[3 * i + 2], normals[i], uv[3 * i + 2] });
+	}
+
+	return tris;
+
 }

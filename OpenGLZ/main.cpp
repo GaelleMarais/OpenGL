@@ -170,12 +170,9 @@ int main(void)
 	glDebugMessageCallback(opengl_error_callback, nullptr);
 	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 
-	const size_t nParticules = 1000;
-	const auto particules = MakeParticules(nParticules);
 
 	//charge triangle
-	const auto triangle = ReadStl("sleeping_cat.stl", "pikachu.jpg");
-
+	const auto triangle = ReadObj("frog.obj");
 	// Shader
 	const auto vertex = MakeShader(GL_VERTEX_SHADER, "shader.vert");
 	const auto fragment = MakeShader(GL_FRAGMENT_SHADER, "shader.frag");
@@ -183,7 +180,6 @@ int main(void)
 	const auto program = AttachAndLink({ vertex, fragment });
 
 	glUseProgram(program);
-
 
 	// Buffers
 	GLuint vbo, vao;
@@ -212,8 +208,9 @@ int main(void)
 	glVertexAttribPointer(index, 2, GL_FLOAT, GL_FALSE, sizeof(glm::vec3) * 2 + sizeof(glm::vec2), (void*)(sizeof(glm::vec3) * 2));
 	glEnableVertexAttribArray(index);
 
+	//texture
 	int width, height, nbrchanel;
-	unsigned char* img = stbi_load("pikachu.jpg", &width, &height, &nbrchanel, 0);
+	unsigned char* img = stbi_load("frog.jpg", &width, &height, &nbrchanel, 0);
 
 	GLuint texture;
 	glCreateTextures(GL_TEXTURE_2D, 1, &texture);
@@ -227,8 +224,6 @@ int main(void)
 
 	glBindTextureUnit(0, texture);
 	glUniform1i(uniformTexture, 0);
-	//glActiveTexture(0);
-
 
 	int count = 0;
 	glEnable(GL_DEPTH_TEST);
@@ -237,36 +232,31 @@ int main(void)
 		glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		//Allow rescale the window
+		int width, height;
+		glfwGetFramebufferSize(window, &width, &height);
+		glViewport(0, 0, width, height);
+
 		count++;
 
-		float angle = 35 * sin(count * 0.1f);
-
-		float s = (0.05f * float(count % 100) / 100);
-		float dist = 25;
-
 		glm::mat4 transform = glm::mat4(1);
-
-		transform = glm::scale(transform, glm::vec3(0.0001, 0.0001, 0.0001));
-		transform = glm::translate(transform, glm::vec3(dist, 0, 0));
-		transform = glm::rotate(transform, glm::radians(1.0f * count), glm::vec3(0, 0, 1));
-
 		glm::mat4 projection = glm::perspective(glm::radians(90.0f), (float)sizeWidth / (float)sizeHeight, 0.1f, 1000.0f);
-		glm::mat4 view = glm::lookAt(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		glm::mat4 view = glm::lookAt(glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.5f));
+
+
+		transform = glm::translate(transform, glm::vec3(-50, -50, -50));
+		transform = glm::scale(transform, glm::vec3(10, 10, 10));
+		transform = glm::rotate(transform, glm::radians(1.0f * count), glm::vec3(0, 0, 1));
+		transform = glm::translate(transform, glm::vec3(0, 0, sin(count * 0.1f)));
 
 		glUniformMatrix4fv(uniformTransform, 1, false, glm::value_ptr(transform));
 		glUniformMatrix4fv(uniformView, 1, false, glm::value_ptr(view));
 		glUniformMatrix4fv(uniformProjection, 1, false, glm::value_ptr(projection));
 
-		int width, height;
-		glfwGetFramebufferSize(window, &width, &height);
-
-		glViewport(0, 0, width, height);
-
 		glDrawArrays(GL_TRIANGLES, 0, triangle.size() * 3);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
-
 	}
 
 	glfwDestroyWindow(window);
